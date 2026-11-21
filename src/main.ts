@@ -1,5 +1,4 @@
-import "@fontsource-variable/hanken-grotesk";
-import "@fontsource-variable/jetbrains-mono";
+import "@fontsource-variable/figtree";
 import "./style.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

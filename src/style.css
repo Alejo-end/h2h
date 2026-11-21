@@ -1,6 +1,6 @@
 /* H2H: black mask, bare copper, white print. The plates set the room: black, with copper
    as the one warm colour, and the two module colours only where they mean a module.
-   Hanken Grotesk sets the words, JetBrains Mono the numbers, labels and bytes. */
+   Figtree sets everything: it is the free cousin of the Avenir Next on the plates. */
 :root {
   --bg: #0a0a0b;
   --bg-in: #151517;
@@ -19,8 +19,8 @@
   --gutter: 20px;
   --measure: 34rem;
   --max: 1320px;
-  --sans: "Hanken Grotesk Variable", system-ui, sans-serif;
-  --mono: "JetBrains Mono Variable", ui-monospace, monospace;
+  --sans: "Figtree Variable", "Avenir Next", Avenir, system-ui, sans-serif; /* the plate labels are Avenir Next Demi; Figtree is its free cousin */
+  --mono: var(--sans); /* small labels: the same face, demi, with tabular figures */
   color-scheme: dark;
 }
 
@@ -34,6 +34,7 @@ body {
   font: 400 17px/1.55 var(--sans);
   font-kerning: normal;
   -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
   overflow-x: hidden;
 }
 a { color: var(--copper); text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
@@ -43,9 +44,9 @@ b.blue { color: var(--blue); }
 b.red { color: var(--red); }
 .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
-/* labels, indices and bytes: small mono, lower case, like the plate's print */
+/* labels, indices and bytes: small demi, lower case, like the plate's print */
 .tag, .eyebrow {
-  margin: 0; font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.02em; color: var(--mute);
+  margin: 0; font: 600 0.8rem/1.4 var(--mono); letter-spacing: 0.03em; color: var(--mute);
 }
 .tag .idx { color: var(--copper); margin-right: 1.1em; }
 
@@ -102,7 +103,7 @@ main { position: relative; z-index: 1; }
 .hero-mark { margin: 0 0 22px; line-height: 0; color: var(--copper); }
 .hero-mark svg { width: 148px; height: auto; filter: drop-shadow(0 0 28px rgb(209 145 107 / 0.22)); }
 .hero-title {
-  margin: 0; font-size: clamp(34px, 8.6vw, 76px); line-height: 1.02; font-weight: 600; letter-spacing: -0.035em; text-wrap: balance;
+  margin: 0; font-size: clamp(28px, 5.4vw, 50px); line-height: 1.08; font-weight: 600; letter-spacing: -0.015em; text-wrap: balance;
 }
 .lede { margin: 16px 0 0; max-width: 30rem; font-size: 1.06rem; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 28px; }
@@ -131,7 +132,7 @@ main { position: relative; z-index: 1; }
 .feature .tag { padding-top: 20px; border-radius: 14px 14px 0 0; }
 .feature > :last-child { padding-bottom: 22px; border-radius: 0 0 14px 14px; }
 .feature p + p, .feature h2 + p, .feature h2 + .facts, .feature p + .demo, .feature p + .legend { padding-top: 14px; }
-.feature h2 { font-size: clamp(28px, 3.3vw, 44px); line-height: 1.06; font-weight: 600; letter-spacing: -0.03em; padding-top: 12px; padding-bottom: 4px; text-wrap: balance; }
+.feature h2 { font-size: clamp(28px, 3.3vw, 44px); line-height: 1.06; font-weight: 600; letter-spacing: -0.02em; padding-top: 12px; padding-bottom: 4px; text-wrap: balance; }
 .feature p { color: var(--ink-2); text-wrap: pretty; }
 
 .facts { margin: 0; display: grid; gap: 0; }

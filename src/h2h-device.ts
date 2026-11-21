@@ -56,7 +56,7 @@ export const VIEWS: Record<string, View> = {
   ports: { tilt: 0.32, yaw: 1.2, zoom: 1.05, focus: [14, 3, 19.25] },
   cables: { tilt: 0.38, yaw: 0.22, zoom: 1.2, focus: [29.65, 2, 30] },
   trs: { tilt: 0.42, yaw: -Math.PI + 0.75, zoom: 1.15, focus: [44, 3, 8] },
-  panic: { tilt: 0.95, yaw: -0.3, zoom: 1.25, focus: [29.65, 7, 19.25] },
+  panic: { tilt: 0.95, yaw: -0.3, zoom: 1.08, focus: [29.65, 7, 19.25] },
   lights: { tilt: 1.3, yaw: 0, zoom: 1.15, focus: [29.65, 8.6, 22] },
   spin: { tilt: 0.5, yaw: -0.5, zoom: 0.82, focus: C },
 };
