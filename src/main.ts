@@ -78,11 +78,6 @@ if (reduce) {
     .to(".note-on", { autoAlpha: 0, duration: 0.04 }, 0.96)
     .set({}, {}, 1);
 }
-// the bar shows once the hero has gone
-const bar = () => document.documentElement.classList.toggle("scrolled", scrollY > innerHeight * 0.5);
-addEventListener("scroll", bar, { passive: true });
-bar();
-
 // the sections: the device moves aside (desktop) or up (phone)
 ScrollTrigger.create({
   trigger: "#features",

@@ -64,24 +64,6 @@ b.red { color: var(--red); }
 .btn-ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--rule-2); }
 .btn-ghost:hover { background: rgb(236 232 225 / 0.06); }
 
-/* ---- the bar: the mark, the sections, Order ------------------------------- */
-.bar {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 10;
-  display: flex; align-items: center; gap: 28px; height: 60px; padding: 0 var(--gutter);
-  padding-top: env(safe-area-inset-top);
-  background: linear-gradient(rgb(10 10 11 / 0.92), rgb(10 10 11 / 0.82));
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 1px 0 var(--rule);
-  opacity: 0; transform: translateY(-100%); transition: opacity 0.35s, transform 0.35s;
-}
-.scrolled .bar { opacity: 1; transform: none; }
-.bar-mark { display: block; color: var(--copper); line-height: 0; }
-.bar-mark svg { height: 22px; width: auto; }
-.bar-nav { display: none; gap: 26px; margin-left: auto; }
-.bar-nav a { color: var(--ink-2); text-decoration: none; font: 500 0.78rem/1 var(--mono); }
-.bar-nav a:hover { color: var(--ink); }
-.bar .btn { margin-left: auto; }
-
 /* ---- the device: one fixed canvas behind the page (the large viewport height, so a
    phone's address bar coming and going never resizes it) */
 h2h-device { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100lvh; z-index: 0; display: block; }
@@ -348,9 +330,6 @@ main { position: relative; z-index: 1; }
 @media (min-width: 960px) {
   :root { --gutter: 48px; }
   body { font-size: 18px; }
-  .bar { height: 68px; }
-  .bar-nav { display: flex; }
-  .bar .btn { margin-left: 0; }
   .hero-copy { bottom: 72px; }
   .hero-mark svg { width: 188px; }
   .lede { font-size: 1.2rem; }
