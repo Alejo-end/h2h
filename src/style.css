@@ -182,7 +182,29 @@ main { position: relative; z-index: 1; }
   overflow: hidden;
 }
 .diagram-host { padding: 6px 0; }
-.trs-host { padding: 18px 16px 6px; display: grid; gap: 18px; }
+.trs-host { padding: 28px 20px 22px; }
+/* the plug, drawn to scale, and what each contact carries */
+.trs { margin: 0; }
+.trs svg { width: 100%; height: auto; display: block; overflow: visible; }
+.trs .ins { fill: #070708; }
+.trs .hl { stroke: rgb(255 255 255 / 0.09); stroke-width: 0.8; stroke-linecap: round; }
+.trs .contact { fill: url(#trs-steel); transition: filter 0.4s; }
+.trs .contact[data-role="v"] { fill: url(#trs-gold); filter: drop-shadow(0 0 5px rgb(209 145 107 / 0.55)); }
+.trs .contact[data-role="data"] { filter: drop-shadow(0 0 5px rgb(255 255 255 / 0.35)); }
+.trs .lead { stroke: var(--rule-2); stroke-width: 0.6; transition: stroke 0.4s; }
+.trs .lead-dot { fill: var(--mute); transition: fill 0.4s; }
+.trs .lead[data-role="v"] { stroke: rgb(209 145 107 / 0.7); }
+.trs .lead-dot[data-role="v"] { fill: var(--copper); }
+.trs .lead[data-role="data"] { stroke: rgb(236 232 225 / 0.5); }
+.trs .lead-dot[data-role="data"] { fill: var(--ink); }
+.trs-calls { position: relative; height: 66px; }
+.trs-call { position: absolute; left: var(--x); top: 6px; transform: translateX(-50%); display: grid; justify-items: center; gap: 3px; text-align: center; white-space: nowrap; }
+.trs-part { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; color: var(--mute); }
+.trs-role { font-size: 1.02rem; font-weight: 600; color: var(--ink); }
+.trs-call[data-role="v"] .trs-role { color: var(--copper); }
+.trs-pin { font-size: 0.72rem; color: var(--faint); }
+.trs-call.swap .trs-role, .trs-call.swap .trs-pin { animation: trs-swap 0.45s cubic-bezier(.2,.7,.2,1); }
+@keyframes trs-swap { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 .plate { width: 100%; height: auto; display: block; overflow: visible; }
 .plate .maze { opacity: 0.34; }
 .plate .trace, .plate .ring, .plate .shared { fill: none; stroke: var(--copper); stroke-linecap: round; stroke-linejoin: round; transition: opacity 0.4s; }
@@ -210,43 +232,9 @@ main { position: relative; z-index: 1; }
 .plate .cap:focus-visible .cap-edge { stroke: var(--copper); stroke-width: 0.35; }
 
 /* ---- the TRS plug and the jack ----------------------------------------------- */
-.trs { width: 100%; height: auto; display: block; overflow: visible; }
-.trs .jack { fill: rgb(255 255 255 / 0.015); stroke: var(--rule-2); stroke-width: 0.4; stroke-dasharray: 1.4 1.2; }
-.trs .grip { stroke: rgb(255 255 255 / 0.07); stroke-width: 0.6; }
-.trs .metal { fill: url(#trs-metal); }
-.trs .ins { fill: #0c0c0d; }
-.trs .role .fill, .trs .role .glow { opacity: 0; transition: opacity 0.4s; }
-.trs .role .glow { filter: url(#trs-glow); }
-.trs .role[data-role="v"] .fill { fill: url(#trs-copper); opacity: 1; }
-.trs .role[data-role="v"] .glow { fill: var(--copper); opacity: 0.55; }
-.trs .role[data-role="data"] .glow { fill: #fff; opacity: 0.5; animation: bits 1.6s steps(1) infinite; }
 @keyframes bits { 0% { opacity: 0.55; } 12% { opacity: 0.1; } 25% { opacity: 0.55; } 37% { opacity: 0.55; } 50% { opacity: 0.1; } 62% { opacity: 0.1; } 75% { opacity: 0.55; } 87% { opacity: 0.1; } }
-.trs .springs polyline { fill: none; stroke: #cfc9bf; stroke-width: 0.9; stroke-linejoin: round; stroke-linecap: round; }
-.trs .net { fill: none; stroke: var(--faint); stroke-width: 0.7; transition: stroke 0.3s, opacity 0.3s; }
-.trs .net[data-role="v"], .trs .net.net-v { stroke: var(--copper); }
-.trs .net[data-role="data"], .trs .net.net-data { stroke: var(--ink); }
-.trs .net.flow { stroke-dasharray: 1.2 2.2; animation: flow 0.9s linear infinite; stroke: var(--bg); }
 @keyframes flow { to { stroke-dashoffset: -3.4; } }
-.trs[data-type="a"] .wire-b, .trs[data-type="b"] .wire-a { opacity: 0; }
-.trs .sw { fill: none; stroke: var(--rule-2); stroke-width: 0.4; }
-.trs text { font: 500 4.4px/1 var(--mono); fill: var(--mute); }
-.trs .letters text { fill: var(--ink); font-weight: 700; }
-.trs .w-data { fill: var(--ink); }
-.trs .w-v { fill: var(--copper); }
-.trs[data-type="a"] .sw-a, .trs[data-type="b"] .sw-b { fill: var(--ink); }
-.trs .knob { fill: var(--copper); transition: transform 0.3s cubic-bezier(.3,.7,.2,1); }
-.trs[data-type="b"] .knob { transform: translateX(8.4px); }
 
-.trs-map { width: 100%; border-collapse: collapse; font: 500 0.74rem/1.3 var(--mono); }
-.trs-map th, .trs-map td { padding: 9px 8px 9px 0; text-align: left; vertical-align: top; border-top: 1px solid var(--rule); font-weight: 500; }
-.trs-map thead th { color: var(--mute); border-top: 0; padding-top: 0; }
-.trs-map tbody th { color: var(--mute); white-space: nowrap; }
-.trs-map td span { display: block; color: var(--faint); }
-.trs-map tr { transition: opacity 0.3s; }
-.trs-map tbody tr:not(.on) { opacity: 0.4; }
-.trs-map tr.on th { color: var(--ink); }
-.trs-map .r-v { color: var(--copper); }
-.trs-map .r-data { color: var(--ink); }
 
 /* ---- panic ------------------------------------------------------------------- */
 .panic-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
@@ -329,7 +317,6 @@ main { position: relative; z-index: 1; }
 /* ---- phone details ---------------------------------------------------------------- */
 @media (max-width: 959px) {
   .plate .print text { font-size: 2.4px; stroke-width: 0.7px; }
-  .trs text { font-size: 7px; }
   .pr-grid, .pr-notes { grid-template-columns: 4.4em repeat(16, minmax(0, 1fr)); }
   .pr-notes { grid-template-columns: 4.4em 1fr; }
   .pr-cc { font-size: 0.6rem; }
@@ -388,4 +375,12 @@ main { position: relative; z-index: 1; }
    costs a letter */
 @media (min-width: 960px) {
   .feature { text-shadow: 0 0 14px var(--bg), 0 0 3px var(--bg); }
+}
+
+/* a narrow plug has no room for three callouts in a row: the ring's drops to a second row */
+@media (max-width: 599px) {
+  .trs-calls { height: 136px; }
+  .trs-call[data-part="ring"] { top: 72px; }
+  .trs-call[data-part="ring"]::before { content: ""; position: absolute; left: 50%; top: -66px; height: 62px; border-left: 1px solid var(--rule-2); }
+  .trs-role { font-size: 0.95rem; }
 }

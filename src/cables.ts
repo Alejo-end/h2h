@@ -186,7 +186,7 @@ export class GhostCables {
 
   /** Place the plugs for this progress and shift. True while something still moves. */
   update(progress: number, shift: number, now: number): boolean {
-    const away = 1 - smooth(clamp(shift));
+    const away = 1 - smooth(clamp(shift * 3)); // gone in the first third of the move aside
     let moving = false;
     let any = false;
     for (const p of this.plugs) {
