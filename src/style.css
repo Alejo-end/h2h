@@ -186,16 +186,16 @@ main { position: relative; z-index: 1; }
 /* the plug, drawn to scale, and what each contact carries */
 .trs { margin: 0; }
 .trs svg { width: 100%; height: auto; display: block; overflow: visible; }
-.trs .ins { fill: #070708; }
-.trs .hl { stroke: rgb(255 255 255 / 0.09); stroke-width: 0.8; stroke-linecap: round; }
-.trs .contact { fill: url(#trs-steel); transition: filter 0.4s; }
-.trs .contact[data-role="v"] { fill: url(#trs-gold); filter: drop-shadow(0 0 5px rgb(209 145 107 / 0.55)); }
-.trs .contact[data-role="data"] { filter: drop-shadow(0 0 5px rgb(255 255 255 / 0.35)); }
-.trs .lead { stroke: var(--rule-2); stroke-width: 0.6; transition: stroke 0.4s; }
-.trs .lead-dot { fill: var(--mute); transition: fill 0.4s; }
-.trs .lead[data-role="v"] { stroke: rgb(209 145 107 / 0.7); }
+.trs .body { fill: none; stroke: var(--mute); stroke-width: 0.8; stroke-linejoin: round; }
+.trs .collar, .trs .contact { fill: none; stroke: var(--ink-2); stroke-width: 0.8; stroke-linejoin: round; transition: fill 0.3s, stroke 0.3s; }
+.trs .ins { fill: none; stroke: var(--faint); stroke-width: 0.8; }
+.trs .contact[data-role="v"] { fill: var(--copper); stroke: var(--copper); }
+.trs .contact[data-role="data"] { fill: var(--ink); stroke: var(--ink); }
+.trs .lead { stroke: var(--rule-2); stroke-width: 0.6; transition: stroke 0.3s; }
+.trs .lead-dot { fill: var(--mute); transition: fill 0.3s; }
+.trs .lead[data-role="v"] { stroke: var(--copper); }
 .trs .lead-dot[data-role="v"] { fill: var(--copper); }
-.trs .lead[data-role="data"] { stroke: rgb(236 232 225 / 0.5); }
+.trs .lead[data-role="data"] { stroke: var(--ink-2); }
 .trs .lead-dot[data-role="data"] { fill: var(--ink); }
 .trs-calls { position: relative; height: 66px; }
 .trs-call { position: absolute; left: var(--x); top: 6px; transform: translateX(-50%); display: grid; justify-items: center; gap: 3px; text-align: center; white-space: nowrap; }
@@ -203,8 +203,8 @@ main { position: relative; z-index: 1; }
 .trs-role { font-size: 1.02rem; font-weight: 600; color: var(--ink); }
 .trs-call[data-role="v"] .trs-role { color: var(--copper); }
 .trs-pin { font-size: 0.72rem; color: var(--faint); }
-.trs-call.swap .trs-role, .trs-call.swap .trs-pin { animation: trs-swap 0.45s cubic-bezier(.2,.7,.2,1); }
-@keyframes trs-swap { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+.trs-call.swap .trs-role, .trs-call.swap .trs-pin { animation: trs-swap 0.3s ease-out; }
+@keyframes trs-swap { from { opacity: 0; } to { opacity: 1; } }
 .plate { width: 100%; height: auto; display: block; overflow: visible; }
 .plate .maze { opacity: 0.34; }
 .plate .trace, .plate .ring, .plate .shared { fill: none; stroke: var(--copper); stroke-linecap: round; stroke-linejoin: round; transition: opacity 0.4s; }

@@ -1,4 +1,4 @@
-// The TRS demo: a 3.5 mm plug drawn to scale, with a callout under each contact that says
+// The TRS demo: a 3.5 mm plug drawn flat and to scale, like a technical drawing, with a callout under each contact that says
 // what the contact carries on MIDI OUT for the chosen type.
 //
 // Type A: ring = +V source (DIN pin 4), tip = data (DIN pin 5). Type B swaps tip and ring.
@@ -47,32 +47,9 @@ export function mountTrs(host: HTMLElement): (t: "a" | "b") => void {
   svg.setAttribute("role", "img");
   svg.setAttribute("aria-label", "A 3.5 mm TRS plug: sleeve, ring and tip, with what each carries on MIDI OUT");
   svg.innerHTML = `
-    <defs>
-      <linearGradient id="trs-steel" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#5d5a55" /><stop offset="0.16" stop-color="#d9d5cd" /><stop offset="0.3" stop-color="#fbf9f4" />
-        <stop offset="0.46" stop-color="#b3aea5" /><stop offset="0.72" stop-color="#4d4a46" /><stop offset="0.9" stop-color="#7c7871" /><stop offset="1" stop-color="#3b3936" />
-      </linearGradient>
-      <linearGradient id="trs-gold" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#6e4630" /><stop offset="0.16" stop-color="#e2ad8c" /><stop offset="0.3" stop-color="#ffe2cc" />
-        <stop offset="0.46" stop-color="#d1916b" /><stop offset="0.72" stop-color="#5e3a27" /><stop offset="0.9" stop-color="#93603f" /><stop offset="1" stop-color="#3f271a" />
-      </linearGradient>
-      <linearGradient id="trs-mould" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#1a1a1d" /><stop offset="0.18" stop-color="#3b3b40" /><stop offset="0.34" stop-color="#2a2a2e" />
-        <stop offset="0.8" stop-color="#0d0d0f" /><stop offset="1" stop-color="#18181b" />
-      </linearGradient>
-      <linearGradient id="trs-fade" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#fff" stop-opacity="0" /><stop offset="0.14" stop-color="#fff" stop-opacity="1" />
-      </linearGradient>
-      <mask id="trs-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="url(#trs-fade)" /></mask>
-      <filter id="trs-shadow" x="-10%" y="-200%" width="120%" height="500%"><feGaussianBlur stdDeviation="3" /></filter>
-    </defs>
-    <ellipse cx="${(40 + at(14.9)) / 2}" cy="${Y + 36}" rx="${(at(14.9) - 40) / 2}" ry="2.5" fill="#000" opacity="0.6" filter="url(#trs-shadow)" />
-    <g mask="url(#trs-mask)">
-      <path d="M0 ${Y - 8}H22V${Y + 8}H0Z" fill="url(#trs-mould)" />
-      <path d="${BODY}" fill="url(#trs-mould)" />
-      <path d="M54 ${Y - 26.5}H${X0 - 9}" class="hl" />
-    </g>
-    <path d="${COLLAR}" fill="url(#trs-steel)" />
+    <path class="body" d="M0 ${Y - 8}H22V${Y + 8}H0Z" />
+    <path class="body" d="${BODY}" />
+    <path class="collar" d="${COLLAR}" />
     <path class="contact" data-part="sleeve" d="${band(SLEEVE)}" />
     <path class="ins" d="${band(INS1)}" />
     <path class="contact" data-part="ring" d="${band(RING)}" />
