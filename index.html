@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>H2H, one MIDI rig for two computers</title>
+    <meta name="description" content="H2H joins two computers over USB MIDI and gives both a MIDI IN and a MIDI OUT. Built by hand in a small batch." />
+    <meta name="theme-color" content="#0a0a0b" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <meta property="og:title" content="H2H, one MIDI rig for two computers" />
+    <meta property="og:description" content="Two computers, one MIDI IN, one MIDI OUT. A small USB MIDI bridge in copper and black." />
+    <meta property="og:image" content="photos/top.webp" />
+    <link rel="preload" href="model/h2h.glb" as="fetch" crossorigin />
+  </head>
+  <body>
+    <h2h-device aria-hidden="true"></h2h-device>
+    <img class="poster" src="photos/top-700.webp" alt="" aria-hidden="true" />
+
+    <main>
+      <section id="stage" aria-label="H2H">
+        <div class="stage-sticky">
+          <div class="hero-copy">
+            <h1 class="wordmark">H<sup>2</sup>H</h1>
+            <p class="lede">One MIDI rig, two computers. H2H joins two computers over USB and gives both of them a MIDI IN and a MIDI OUT.</p>
+            <p class="cue" aria-hidden="true">Scroll to put it together</p>
+          </div>
+          <p class="note note-parts">Two plates of bare copper, a printed frame in two halves, and one board with two Seeed XIAO RP2040s: one for each computer.</p>
+          <p class="note note-on">Plug in both sides.</p>
+        </div>
+      </section>
+
+      <section id="features" aria-label="What H2H does">
+        <article class="feature" data-view="top" id="host">
+          <p class="tag">host 2 host</p>
+          <h2>Two computers, one rig</h2>
+          <p>Plug one computer into each end. Each one sees a plain USB MIDI port, <b class="blue">H2H Blue</b> on the left and <b class="red">H2H Red</b> on the right. There is no driver to install. What one computer sends, the other receives.</p>
+          <p>The jacks bring your hardware in. MIDI IN goes to both computers. MIDI OUT plays everything: both computers and MIDI IN.</p>
+        </article>
+
+        <article class="feature" data-view="face" id="routing">
+          <p class="tag">routing</p>
+          <h2>Play it</h2>
+          <p>Pick where a note comes from, then play. The dots follow the firmware's routing, and the lights on the plate flash the way the real ones do.</p>
+          <div class="demo">
+            <div class="pills" role="radiogroup" aria-label="Where the note comes from">
+              <button type="button" role="radio" aria-checked="true" data-source="blue">host blue</button>
+              <button type="button" role="radio" aria-checked="false" data-source="red">host red</button>
+              <button type="button" role="radio" aria-checked="false" data-source="din">midi in</button>
+            </div>
+            <div class="keys" aria-label="A one octave keyboard, C4 to C5"></div>
+            <div class="diagram-host" data-diagram="route"></div>
+            <p class="log" aria-live="polite">&nbsp;</p>
+          </div>
+        </article>
+
+        <article class="feature" data-view="ports" id="ports">
+          <p class="tag">midi in, host blue / midi out, host red</p>
+          <h2>Two ends, four ports</h2>
+          <dl class="facts">
+            <div><dt>Left end</dt><dd>USB-C for host blue, and MIDI IN on a 3.5 mm TRS jack.</dd></div>
+            <div><dt>Right end</dt><dd>USB-C for host red, and MIDI OUT on a 3.5 mm TRS jack.</dd></div>
+            <div><dt>Between them</dt><dd>Two Seeed XIAO RP2040 modules, one for each computer, joined by a link on the board.</dd></div>
+          </dl>
+        </article>
+
+        <article class="feature" data-view="cables" id="cables">
+          <p class="tag">2 cables / 1 cable</p>
+          <h2>Two cables, or one</h2>
+          <p>Two computers on one audio interface or mixer can hum through their shared ground. On <b>2 cables</b>, each side runs from its own computer, and the two grounds stay apart.</p>
+          <p>On <b>1 cable</b>, the two sides share one supply, so one USB port runs both. A phone charger is enough: MIDI IN then plays straight to MIDI OUT, with no computer at all.</p>
+          <div class="demo">
+            <div class="switch" role="radiogroup" aria-label="The cable switch">
+              <button type="button" role="radio" aria-checked="true" data-cables="2">2 cables</button>
+              <button type="button" role="radio" aria-checked="false" data-cables="1">1 cable</button>
+            </div>
+            <div class="plugs">
+              <label><input type="checkbox" data-plug="blue" checked /> host blue plugged in</label>
+              <label><input type="checkbox" data-plug="red" checked /> host red plugged in</label>
+            </div>
+            <div class="diagram-host" data-diagram="power"></div>
+            <p class="status" aria-live="polite"></p>
+          </div>
+        </article>
+
+        <article class="feature" data-view="trs" id="trs">
+          <p class="tag">a trs b</p>
+          <h2>TRS type A or B</h2>
+          <p>There are two ways to wire MIDI on a 3.5 mm jack, and gear does not agree on one. The switch next to MIDI OUT picks the type, also while H2H runs. The red light flashes white once for A and twice for B.</p>
+          <p>MIDI IN needs no switch: a diode bridge takes both types.</p>
+          <div class="demo">
+            <div class="switch" role="radiogroup" aria-label="The MIDI OUT type switch">
+              <button type="button" role="radio" aria-checked="true" data-trs="a">a</button>
+              <button type="button" role="radio" aria-checked="false" data-trs="b">b</button>
+            </div>
+            <svg class="plug" viewBox="0 0 360 90" role="img" aria-label="A TRS plug: tip, ring and sleeve">
+              <path class="plug-body" d="M 10 30 H 110 V 60 H 10 Z" />
+              <path class="plug-metal sleeve" d="M 110 34 H 200 V 56 H 110 Z" />
+              <path class="plug-ins" d="M 200 34 H 210 V 56 H 200 Z" />
+              <path class="plug-metal ring" d="M 210 34 H 260 V 56 H 210 Z" />
+              <path class="plug-ins" d="M 260 34 H 270 V 56 H 260 Z" />
+              <path class="plug-metal tip" d="M 270 34 H 300 Q 322 45 300 56 H 270 Z" />
+              <text x="155" y="82" text-anchor="middle" class="label">sleeve: ground</text>
+              <text x="235" y="22" text-anchor="middle" class="label" id="ring-role">ring: +V</text>
+              <text x="300" y="82" text-anchor="middle" class="label" id="tip-role">tip: data</text>
+            </svg>
+          </div>
+        </article>
+
+        <article class="feature" data-view="panic" id="panic">
+          <p class="tag">panic</p>
+          <h2>Panic</h2>
+          <p>A stuck note stops with one press. H2H sends a note off for every note it knows is still on, then sustain off, all sound off and all notes off, on all 16 channels. It sends them to both computers and to MIDI OUT.</p>
+          <div class="demo demo-panic">
+            <button type="button" class="panic-btn" aria-label="Press panic"></button>
+            <p class="status" aria-live="polite">The red light holds white while it works.</p>
+          </div>
+        </article>
+
+        <article class="feature" data-view="spin" id="stage-ready">
+          <p class="tag">coast 2 coast</p>
+          <h2>Made for the stage</h2>
+          <dl class="facts" id="stage-facts"></dl>
+        </article>
+
+        <article class="feature" data-view="lights" id="lights">
+          <p class="tag">lights</p>
+          <h2>Read the lights</h2>
+          <p>Each module has one light, under a window in the top plate. Press a row to see it.</p>
+          <ul class="legend" id="legend"></ul>
+        </article>
+      </section>
+
+      <section id="photos" aria-labelledby="photos-title">
+        <h2 id="photos-title">The real one</h2>
+        <div class="gallery">
+          <figure class="ph-top"><img src="photos/top.webp" srcset="photos/top-700.webp 700w, photos/top.webp 1400w" sizes="(min-width: 960px) 60vw, 100vw" width="1400" height="971" alt="H2H from above: a black printed frame around a copper plate with a maze pattern, the H2H logo and the panic button in the middle" loading="lazy" /></figure>
+          <figure class="ph-front"><img src="photos/front.webp" srcset="photos/front-700.webp 649w, photos/front.webp 1299w" sizes="(min-width: 960px) 34vw, 70vw" width="1299" height="1400" alt="H2H standing on its edge, showing the top plate with its labels: midi in, host blue, midi out, host red" loading="lazy" /></figure>
+          <figure class="ph-side"><img src="photos/side.webp" srcset="photos/side-700.webp 178w, photos/side.webp 357w" sizes="(min-width: 960px) 10vw, 20vw" width="357" height="1400" alt="One end of H2H: the USB-C port, the TRS jack and the switch slider in the frame" loading="lazy" /></figure>
+          <figure class="ph-back"><img src="photos/back.webp" srcset="photos/back-700.webp 700w, photos/back.webp 1400w" sizes="(min-width: 960px) 60vw, 100vw" width="1400" height="983" alt="The bottom of H2H: a copper maze around a ring with a frog, four round feet" loading="lazy" /></figure>
+        </div>
+      </section>
+
+      <section id="details" aria-labelledby="details-title">
+        <h2 id="details-title">Details</h2>
+        <dl class="facts">
+          <div><dt>Size</dt><dd>70.2 × 49.4 × 11.7 mm.</dd></div>
+          <div><dt>Computers</dt><dd>Two, over USB-C. Each sees a class compliant USB MIDI port, H2H Blue or H2H Red. No driver.</dd></div>
+          <div><dt>MIDI</dt><dd>IN and OUT on 3.5 mm TRS jacks. IN takes type A and type B and goes through an optocoupler. OUT switches between A and B.</dd></div>
+          <div><dt>Inside</dt><dd>Two Seeed XIAO RP2040 modules, one for each computer, and a link between them on the board.</dd></div>
+          <div><dt>Case</dt><dd>Two plates of FR4 with black mask and bare copper, and a frame printed in two halves. Four M2 screws on each side hold it together.</dd></div>
+          <div><dt>Tested</dt><dd id="tested"></dd></div>
+          <div><dt>Copper</dt><dd>The copper on both plates has only a thin organic coat. It darkens with use and handling, so no two units age the same way.</dd></div>
+          <div><dt>Edition</dt><dd>Twenty, numbered by hand on the bottom plate.</dd></div>
+        </dl>
+      </section>
+
+      <section id="get" aria-labelledby="get-title">
+        <h2 id="get-title">Get one</h2>
+        <p>H2H is built by hand, in a small batch. To ask for one and for its price, open an issue on GitHub and say where it should go.</p>
+        <p><a class="cta" href="https://github.com/Alejo-end/h2h/issues/new?template=ask.yml">Ask for an H2H</a></p>
+        <p class="fine">You need a GitHub account to open an issue. The issue is public, so do not put your address in it. Alejandro answers there and takes the rest to email.</p>
+        <p class="fine">The board is drawn in KiCad and the case in FreeCAD, both open source. The page uses three.js, GSAP and Lenis, and is set in Hanken Grotesk. This website was built with Claude Code.</p>
+        <p class="made">made by <a href="https://alejandrodeleon.space">Alejandro</a>?</p>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

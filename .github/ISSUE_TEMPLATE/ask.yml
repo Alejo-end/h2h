@@ -1,0 +1,28 @@
+name: Ask for an H2H
+description: Ask for one or more H2H units and their price.
+title: "Ask for an H2H"
+labels: ["ask"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for asking. This issue is public: do not write your address, phone number or email here. Alejandro answers in this issue and takes the rest to email.
+  - type: input
+    id: count
+    attributes:
+      label: How many
+      placeholder: "1"
+    validations:
+      required: true
+  - type: input
+    id: country
+    attributes:
+      label: Country it ships to
+      description: For the shipping cost. The country only, no address.
+    validations:
+      required: true
+  - type: textarea
+    id: use
+    attributes:
+      label: What you will use it for
+      description: Optional. Which two computers, which gear on the TRS jacks.

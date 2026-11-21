@@ -1,0 +1,75 @@
+{
+  "version": "2026-11-21",
+  "midiInToBothHosts": true,
+  "led": {
+    "idle": 100,
+    "max": 150,
+    "flashMs": 30,
+    "panicFlashMs": 400,
+    "breathMs": 2000,
+    "boot": [
+      255,
+      160,
+      0
+    ],
+    "usbOut": [
+      255,
+      255,
+      0
+    ],
+    "linkIn": [
+      0,
+      255,
+      0
+    ],
+    "dinIn": [
+      255,
+      0,
+      255
+    ],
+    "panic": [
+      255,
+      255,
+      255
+    ],
+    "handshake": [
+      0,
+      255,
+      255
+    ],
+    "handshakeMs": 600,
+    "mismatch": [
+      255,
+      60,
+      0
+    ],
+    "mismatchMs": 1200,
+    "partyMs": 4000
+  },
+  "sysexMax": 4096,
+  "linkBaud": 1000000,
+  "linkFifo": 8192,
+  "linkDeadUs": 8000,
+  "linkProbeUs": 2000000,
+  "linkProbeOnUs": 2000,
+  "linkJunkMax": 4,
+  "linkJunkWindowMs": 100,
+  "linkQuietMs": 500,
+  "linkPingMs": 1000,
+  "trsSteadyMs": 50,
+  "panicSteadyMs": 10,
+  "watchdogMs": 2000,
+  "egg": {
+    "notes": [
+      60,
+      64,
+      67,
+      72,
+      67,
+      64,
+      60
+    ],
+    "presses": 7,
+    "pressWindowMs": 2500
+  }
+}
