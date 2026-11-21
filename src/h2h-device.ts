@@ -5,6 +5,7 @@
 //   device.shift = 0..1      slides it into the left half (desktop) or the top (phone)
 //   device.sliders / press   the two switch sliders and the panic button
 //   device.leds = fn         the colour of each status LED now (the firmware model)
+//   at progress 0.80..0.90 ghost cables plug into the four ports (cables.ts); shift fades them
 //
 // The model (public/model/h2h.glb) is in the board's frame: metres, x along the board
 // (host blue's end at 0), y up, z across it (the TRS switch edge at 0). It comes apart the
@@ -16,6 +17,7 @@ import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { toCreasedNormals } from "three/addons/utils/BufferGeometryUtils.js";
 import type { Rgb, Side } from "./h2h";
+import { GhostCables } from "./cables";
 
 const BELOW = ["screws_bottom"] as const;
 const ABOVE = ["frame_bottom", "board", "bits", "frame_top", "plate_top", "screws_top"] as const;
@@ -32,7 +34,13 @@ function layerOf(name: string): Layer {
   return "base"; // the bottom plate and the standoffs
 }
 const GAP = 9; // mm of air between layers when apart
-const SLIDER_TRAVEL = 1.5; // mm, end to end
+// The K3-2245S knob travels 2 mm, its centre at the switch x -+ 1.0 (build_shell.py). The
+// case CAD models each slider on its knob at one end of that travel, and the frame's track
+// (8 mm grip in a 10.3 mm window) stops the grip exactly at both ends. In mm from the CAD
+// place, [left, right] as you read the top plate (x grows to the right):
+//   SW2 (x 29.65) is modelled at +1.0, "1 cable", the right end: left "2 cables" is -2.0
+//   SW3 (x 42.58) is modelled at -1.0, "a", the left end: right "b" is +2.0
+const SLIDER_ENDS = { SW2: [-2, 0], SW3: [0, 2] } as const;
 const PRESS = 0.45; // mm the panic cap goes down
 
 export type View = { tilt: number; yaw: number; zoom: number; focus: [number, number, number] };
@@ -50,7 +58,7 @@ export const VIEWS: Record<string, View> = {
   trs: { tilt: 0.42, yaw: -Math.PI + 0.75, zoom: 1.15, focus: [44, 3, 8] },
   panic: { tilt: 0.95, yaw: -0.3, zoom: 1.25, focus: [29.65, 7, 19.25] },
   lights: { tilt: 1.3, yaw: 0, zoom: 1.15, focus: [29.65, 8.6, 22] },
-  spin: { tilt: 0.5, yaw: -0.5, zoom: 0.95, focus: C },
+  spin: { tilt: 0.5, yaw: -0.5, zoom: 0.82, focus: C },
 };
 
 const clamp = (x: number, a = 0, b = 1) => Math.min(b, Math.max(a, x));
@@ -106,6 +114,7 @@ export class H2HDevice extends HTMLElement {
   private t0 = performance.now();
   private rAssembled = 50;
   private portrait = false;
+  private cables = new GhostCables();
   leds: ((s: Side, now: number) => Rgb) | null = null;
   ledsAnimating: (() => boolean) | null = null;
   ready: Promise<void>;
@@ -284,6 +293,7 @@ export class H2HDevice extends HTMLElement {
       this.parts.push(p);
     }
     this.addGlow();
+    this.model.add(this.cables.group);
     const base = this.byName.get("Frame_bottom");
     this.rAssembled = base ? new THREE.Box3().setFromObject(base.obj).getSize(new THREE.Vector3()).x / 2 + 4 : 40;
 
@@ -400,8 +410,9 @@ export class H2HDevice extends HTMLElement {
       highNow = Math.max(highNow, part.hi + part.offset * apart);
       if (part.name === "Slider_SW2" || part.name === "Slider_SW3") {
         // both switches read left to right as you look onto the top plate: x grows to the right
-        const s = part.name === "Slider_SW2" ? this.slidersNow.SW2 : this.slidersNow.SW3;
-        part.obj.position.x += (s * SLIDER_TRAVEL) / 2;
+        const sw = part.name === "Slider_SW2" ? "SW2" : "SW3";
+        const [a, b] = SLIDER_ENDS[sw];
+        part.obj.position.x += a + ((this.slidersNow[sw] + 1) / 2) * (b - a);
       }
       if (part.name === "Panic_cap") part.obj.position.y -= this.pressNow * PRESS;
       const turnK = apart * apart;
@@ -452,7 +463,7 @@ export class H2HDevice extends HTMLElement {
     const heroRoom = 1 - easeInOut(clamp(asm * 1.5));
     const s = this.shiftNow;
     const offX = this.portrait ? 0 : w * 0.25 * s - w * 0.14 * heroRoom * (1 - s);
-    const offY = this.portrait ? h * 0.12 * heroRoom * (1 - s) + h * 0.27 * s : 0;
+    const offY = this.portrait ? h * 0.17 * heroRoom * (1 - s) + h * 0.27 * s : 0;
     if (Math.abs(offX) > 0.5 || Math.abs(offY) > 0.5) this.camera.setViewOffset(w, h, offX, offY, w, h);
     else this.camera.clearViewOffset();
 
@@ -473,6 +484,9 @@ export class H2HDevice extends HTMLElement {
       if (c[0] + c[1] + c[2] > 0) lit = true;
     }
     if (lit && this.ledsAnimating?.()) moving = true;
+
+    // the ghost cables plug in once it is together, and leave with the first section
+    if (this.parts.length && this.cables.update(p, this.shiftNow, now)) moving = true;
 
     if (!(moving || idle > 0 || this.dirty)) return;
     this.dirty = false;
